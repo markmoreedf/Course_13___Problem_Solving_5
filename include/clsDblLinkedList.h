@@ -18,18 +18,6 @@ public:
 
     Node* head = nullptr;
 
-    Node* FindNode(T value)
-    {
-        Node* temp = head;
-        while (temp != nullptr)
-        {
-            if (temp->value == value)
-                return temp;
-            temp = temp->next;
-        }
-        return nullptr;
-    }
-
     void PrintLinkedList()
     {
         Node* temp = head;
@@ -41,7 +29,47 @@ public:
         std::cout << std::endl;
     }
 
+
+    ///////// Searching //////////
+
+    Node* FindByValue(T value)
+    {
+        Node* temp = head;
+        while (temp != nullptr)
+        {
+            if (temp->value == value)
+                return temp;
+            temp = temp->next;
+        }
+        return nullptr;
+    }
+
+    Node* FindByIndex(int index)
+    {
+        if (index < 0 || index >= _size) { return nullptr; }
+        Node* temp = head;
+        while (index > 0)
+        {
+            temp = temp->next;
+            index--;
+        }
+        return temp;
+
+    }
+
+    T GetItemByIndex(int index)
+    {
+        Node* node = FindByIndex(index);
+        if (node != nullptr) { return node->value; }
+
+        //Index out of bounds
+        return T();
+
+    }
+
+
     ////////// Insertion //////////
+
     void InsertAtBeginning(T value)
     {
         Node* newNode = new Node(value);
@@ -57,12 +85,12 @@ public:
         _size++;
     }
 
-    void InsertAfter(Node* prevNode, T valueToInsert)
+    bool InsertAfterNode(Node* prevNode, T valueToInsert)
     {
         if (prevNode == nullptr)
         {
             std::cout << "Previous node cannot be NULL\n";
-            return;
+            return false;
         }
 
         Node* n = new Node(valueToInsert);
@@ -74,6 +102,25 @@ public:
         }
         prevNode->next = n;
         _size++;
+        return true;
+    }
+
+    bool InsertAfterValue(T valueToFind, T valueToInsert)
+    {
+        Node* temp = FindByValue(valueToFind);
+        // to prevent calling InsertAfter with a nullptr, we check if temp is nullptr
+        if (temp == nullptr) return false;
+        return InsertAfterNode(temp, valueToInsert);
+    }
+
+    bool InsertAfterIndex(int index, T valueToInsert)
+    {
+        Node* temp = FindByIndex(index);
+
+        // to prevent calling InsertAfter with a nullptr, we check if temp is nullptr
+        if (temp == nullptr) return false;
+
+        return InsertAfterNode(temp, valueToInsert);
     }
 
     void InsertAtEnd(T value)
@@ -83,6 +130,7 @@ public:
         if (head == nullptr)
         {
             head = newNode;
+            _size++;
             return;
         }
 
@@ -96,17 +144,8 @@ public:
         _size++;
     }
 
+
     ////////// Deletion //////////
-    void DeleteLinkedList()
-    {
-        while (head != nullptr)
-        {
-            Node* tempPtr = head;
-            head = head->next;
-            delete (tempPtr);
-        }
-        _size = 0;
-    }
 
     void DeleteFirstNode()
     {
@@ -129,6 +168,7 @@ public:
         {
             delete head;
             head = nullptr;
+            _size--;
             return;
         }
 
@@ -144,46 +184,18 @@ public:
         _size--;
     }
 
-    void DeleteNode(T valueToDelete)
-    {
-        if (head == nullptr) return;
-
-        Node* temp = head;
-        if (head->value == valueToDelete)
-        {
-            head = head->next;
-            if (head != nullptr) head->prev = nullptr;
-            delete temp;
-            return;
-        }
-
-        while (temp != nullptr)
-        {
-            if (temp->value == valueToDelete)
-            {
-                temp->prev->next = temp->next;
-                if (temp->next != nullptr)
-                {
-                    temp->next->prev = temp->prev;
-                }
-                delete temp;
-                return;
-            }
-            temp = temp->next;
-        }
-        _size--;
-    }
-
     void DeleteNode(Node* nodeToDelete)
     {
         // check if Node belongs to this list 
-        Node* temp = head;
-        while (temp != nullptr)
-        {
-            if (temp == nodeToDelete) { break; }
-            temp = temp->next;
-        }
-        if (temp == nullptr) { return; }
+        //its safe but it trades performance for safety
+
+        //Node* temp = head;
+        //while (temp != nullptr)
+        //{
+        //    if (temp == nodeToDelete) { break; }
+        //    temp = temp->next;
+        //}
+        //if (temp == nullptr) { return; }
 
         if (head == nullptr || nodeToDelete == nullptr) { return; }
 
@@ -196,7 +208,13 @@ public:
         delete nodeToDelete;
 
         _size--;
-        
+
+    }
+
+    void DeleteNodeByValue(T valueToDelete)
+    {
+        if (head == nullptr) return;
+        DeleteNode(FindByValue(valueToDelete));
     }
 
     void DeleteNodeByIndex(int index)
@@ -211,38 +229,57 @@ public:
             return;
         }
 
-        Node* temp = head;
-        int counter = 0;
-
-        while (counter < index)
-        {
-            temp = temp->next;
-            if (temp == nullptr)
-                return;
-            counter++;
-        }
-
-        temp->prev->next = temp->next;
-        if (temp->next != nullptr) temp->next->prev = temp->prev;
-
-        delete temp;
-
-        _size--;
-
+        DeleteNode(FindByIndex(index));
     }
+
 
     ////////// utility functions //////////
 
-    int Size()
+    int Size() { return _size; }
+
+    bool IsEmpty() { return _size == 0; }
+
+    void Clear()
     {
-        return _size;
+        while (head != nullptr)
+        {
+            Node* tempPtr = head;
+            head = head->next;
+            delete (tempPtr);
+        }
+        _size = 0;
     }
 
-    bool IsEmpty()
+    void Reverse()
     {
-        return _size == 0;
+        Node* current = head;
+        Node* temp = nullptr;
+        while (current != nullptr)
+        {
+            temp = current->prev;
+            current->prev = current->next;
+            current->next = temp;
+            current = current->prev;
+        }
+        if (temp != nullptr) { head = temp->prev; }
+
     }
 
 
+    ////////// Updating //////////
+
+    bool UpdateItemByIndex(int index, T newValue)
+    {
+        Node* node = FindByIndex(index);
+        if (node != nullptr)
+        {
+            node->value = newValue;
+            return true;
+        }
+        return false;
+    }
+
+
+    ~clsDblLinkedList() { Clear(); }
 };
 
