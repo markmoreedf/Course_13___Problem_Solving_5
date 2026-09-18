@@ -1,10 +1,11 @@
 ﻿#include <iostream>
 #include "clsDblLinkedList.h"
+#include "ClsMyQueue.h"
 #include <string>
 
 using namespace std;
 
-int main()
+void TestDblLinkedList()
 {
     clsDblLinkedList<int> list;
 
@@ -15,7 +16,7 @@ int main()
     std::cout << "Is empty? " << (list.IsEmpty() ? "Yes" : "No") << "\n";
     std::cout << "Current Size: " << list.Size() << "\n";
     std::cout << "Print Empty: ";
-    list.PrintLinkedList();
+    list.Print();
 
     std::cout << "\n===========================================\n";
     std::cout << "2. TESTING INSERTIONS & OVERLOADS\n";
@@ -26,23 +27,23 @@ int main()
     list.InsertAtBeginning(10);
     list.InsertAtEnd(40);
     std::cout << "List after [10, 20, 40]: ";
-    list.PrintLinkedList(); // 10 20 40
+    list.Print(); // 10 20 40
 
     // 2.2 InsertAfter (by Node pointer)
     clsDblLinkedList<int>::Node* node20 = list.FindByValue(20);
     list.InsertAfterNode(node20, 30);
     std::cout << "Insert 30 after Node(20): ";
-    list.PrintLinkedList(); // 10 20 30 40
+    list.Print(); // 10 20 30 40
 
     // 2.3 InsertAfter (by Value)
     list.InsertAfterValue(30, 35);
     std::cout << "Insert 35 after Value 30: ";
-    list.PrintLinkedList(); // 10 20 30 35 40
+    list.Print(); // 10 20 30 35 40
 
     // 2.4 InsertAfter (by Index)
     list.InsertAfterIndex(0, 15);
     std::cout << "Insert 15 after Index 0:  ";
-    list.PrintLinkedList(); // 10 15 20 30 35 40
+    list.Print(); // 10 15 20 30 35 40
 
     // 2.5 Edge Cases: Invalid InsertAfter
     std::cout << "\nEdge Case: InsertAfter invalid value 99: "
@@ -65,7 +66,7 @@ int main()
 
     list.UpdateItemByIndex(1, 12);
     std::cout << "Updated Index 1 to 12: ";
-    list.PrintLinkedList();
+    list.Print();
 
     std::cout << "Edge Case: Update invalid index 50: "
         << (list.UpdateItemByIndex(50, 99) ? "Success" : "Failed (Expected)") << "\n";
@@ -75,13 +76,13 @@ int main()
     std::cout << "===========================================\n";
 
     std::cout << "Original: ";
-    list.PrintLinkedList();
+    list.Print();
     list.Reverse();
     std::cout << "Reversed: ";
-    list.PrintLinkedList();
+    list.Print();
     list.Reverse(); // Reverse back to original order
     std::cout << "Restored: ";
-    list.PrintLinkedList();
+    list.Print();
 
     std::cout << "\n===========================================\n";
     std::cout << "6. DELETIONS & EDGE CASES\n";
@@ -90,27 +91,27 @@ int main()
     // Delete First & Last
     list.DeleteFirstNode();
     std::cout << "Deleted First Node: ";
-    list.PrintLinkedList();
+    list.Print();
 
     list.DeleteLastNode();
     std::cout << "Deleted Last Node:  ";
-    list.PrintLinkedList();
+    list.Print();
 
     // Delete by Value
     list.DeleteNodeByValue(20);
     std::cout << "Deleted Value 20:   ";
-    list.PrintLinkedList();
+    list.Print();
 
     // Delete by Index
     list.DeleteNodeByIndex(1);
     std::cout << "Deleted Index 1:    ";
-    list.PrintLinkedList();
+    list.Print();
 
     // Delete by Node pointer
     clsDblLinkedList<int>::Node* targetNode = list.FindByIndex(0);
     list.DeleteNode(targetNode);
     std::cout << "Deleted Node at Index 0: ";
-    list.PrintLinkedList();
+    list.Print();
 
     std::cout << "Size after deletions: " << list.Size() << "\n";
 
@@ -127,6 +128,54 @@ int main()
     std::cout << "ALL TESTS COMPLETED SUCCESSFULLY!\n";
     std::cout << "===========================================\n";
 
+}
+
+void TestMyQueue()
+{
+    ClsMyQueue<int> myQueue;
+
+    myQueue.Push(10);
+    myQueue.Push(20);
+    myQueue.Push(30);
+    myQueue.Push(40);
+    myQueue.Push(50);
+    myQueue.Push(60);
+
+    cout << "\nQueue Size: " << myQueue.Size() << "\n";
+
+    cout << "\nQueue Elements: ";     
+    myQueue.Print();
+
+    cout << "\nFront: " << myQueue.Front() << ", Back: " << myQueue.Back() << "\n";
+
+    myQueue.Pop();
+    myQueue.Pop(); 
+    myQueue.Pop();
+
+    cout << "\n\nQueue Elements after Popping 3 items: "; 
+    myQueue.Print();
+
+    cout << "\nFront: " << myQueue.Front() << ", Back: " << myQueue.Back() << "\n";
+    
+    cout << "\n\nGet item By index 0: " << myQueue.GetItemByIndex(0) << endl;
+
+    cout << "\n\nReverse the Queue: "; myQueue.Reverse();
+    myQueue.Print();
+
+    cout << "\n\nUpdate item at index 1 to 100: "; myQueue.UpdateItemByIndex(1, 100);
+    myQueue.Print();
+
+    cout << "\n\nInsert 5 at front: "; myQueue.InsertAtFront(5);
+    myQueue.Print();
+
+    cout << "\n\nInsert 70 at back: "; myQueue.InsertAtBack(70);
+    myQueue.Print();
+}
+
+int main()
+{
+    TestMyQueue();
+   
     return 0;
 }
 
