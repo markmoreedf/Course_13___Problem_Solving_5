@@ -18,7 +18,7 @@ public:
 
     Node* head = nullptr;
 
-    void PrintLinkedList()
+    void Print() const
     {
         Node* temp = head;
         while (temp != nullptr)
@@ -32,7 +32,7 @@ public:
 
     ///////// Searching //////////
 
-    Node* FindByValue(T value)
+    Node* FindByValue(T value) const
     {
         Node* temp = head;
         while (temp != nullptr)
@@ -44,7 +44,7 @@ public:
         return nullptr;
     }
 
-    Node* FindByIndex(int index)
+    Node* FindByIndex(int index) const
     {
         if (index < 0 || index >= _size) { return nullptr; }
         Node* temp = head;
@@ -57,7 +57,7 @@ public:
 
     }
 
-    T GetItemByIndex(int index)
+    T GetItemByIndex(int index) const
     {
         Node* node = FindByIndex(index);
         if (node != nullptr) { return node->value; }
@@ -143,7 +143,6 @@ public:
         newNode->prev = temp;
         _size++;
     }
-
 
     ////////// Deletion //////////
 
@@ -235,9 +234,9 @@ public:
 
     ////////// utility functions //////////
 
-    int Size() { return _size; }
+    int Size() const { return _size; }
 
-    bool IsEmpty() { return _size == 0; }
+    bool IsEmpty()  const { return _size == 0; }
 
     void Clear()
     {
