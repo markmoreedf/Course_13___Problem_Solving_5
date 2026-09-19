@@ -1,14 +1,14 @@
 ﻿#include <iostream>
-#include "clsDblLinkedList.h"
-#include "ClsMyQueue.h"
+#include "DblLinkedList.h"
+#include "MyQueue.h"
+#include "MyStack.h"
 #include <string>
 
 using namespace std;
 
-void TestDblLinkedList()
+static void TestDblLinkedList()
 {
-    clsDblLinkedList<int> list;
-
+    DblLinkedList<int> list;
     std::cout << "===========================================\n";
     std::cout << "1. UTILITY & EMPTY LIST CHECKS\n";
     std::cout << "===========================================\n";
@@ -30,7 +30,7 @@ void TestDblLinkedList()
     list.Print(); // 10 20 40
 
     // 2.2 InsertAfter (by Node pointer)
-    clsDblLinkedList<int>::Node* node20 = list.FindByValue(20);
+    DblLinkedList<int>::Node* node20 = list.FindByValue(20);
     list.InsertAfterNode(node20, 30);
     std::cout << "Insert 30 after Node(20): ";
     list.Print(); // 10 20 30 40
@@ -108,7 +108,7 @@ void TestDblLinkedList()
     list.Print();
 
     // Delete by Node pointer
-    clsDblLinkedList<int>::Node* targetNode = list.FindByIndex(0);
+    DblLinkedList<int>::Node* targetNode = list.FindByIndex(0);
     list.DeleteNode(targetNode);
     std::cout << "Deleted Node at Index 0: ";
     list.Print();
@@ -130,9 +130,9 @@ void TestDblLinkedList()
 
 }
 
-void TestMyQueue()
+static void TestMyQueue()
 {
-    ClsMyQueue<int> myQueue;
+    MyQueue<int> myQueue;
 
     myQueue.Push(10);
     myQueue.Push(20);
@@ -172,9 +172,43 @@ void TestMyQueue()
     myQueue.Print();
 }
 
+static void TestMyStack()
+{
+    MyStack<int> myStack;
+    myStack.Push(10);
+    myStack.Push(20);
+    myStack.Push(30);
+    myStack.Push(40);
+    myStack.Push(50);
+    myStack.Push(60);
+    cout << "\nStack Size: " << myStack.Size() << "\n";
+    cout << "\nStack Elements: ";     
+    myStack.Print();
+    cout << "\nTop: " << myStack.Top() << ", Bottom: " << myStack.Bottom() << "\n";
+    myStack.Pop();
+    myStack.Pop(); 
+    myStack.Pop();
+    cout << "\n\nStack Elements after Popping 3 items: "; 
+    myStack.Print();
+    cout << "\nTop: " << myStack.Top() << ", Bottom: " << myStack.Bottom() << "\n";
+    
+    cout << "\n\nGet item By index 0: " << myStack.GetItemByIndex(0) << endl;
+    cout << "\n\nReverse the Stack: "; myStack.Reverse();
+    myStack.Print();
+    cout << "\n\nUpdate item at index 1 to 100: "; myStack.UpdateItemByIndex(1, 100);
+    myStack.Print();
+    cout << "\n\nInsert 5 at front: "; myStack.InsertAtFront(5);
+    myStack.Print();
+    cout << "\n\nInsert 70 at back: "; myStack.InsertAtBack(70);
+    myStack.Print();
+
+    cout << "\n\nUpdate item at index 2 to 200: ";
+    myStack.UpdateItemByIndex(2, 200);
+    myStack.Print();
+}
 int main()
 {
-    TestMyQueue();
+    TestMyStack();
    
     return 0;
 }

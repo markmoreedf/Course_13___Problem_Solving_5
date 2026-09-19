@@ -23,11 +23,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\clsDblLinkedList.h">
+    <ClInclude Include="include\DblLinkedList.h">
       <Filter>Header Files\DataStructure</Filter>
     </ClInclude>
-    <ClInclude Include="include\ClsMyQueue.h">
+    <ClInclude Include="include\MyQueue.h">
       <Filter>Header Files\DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MyStack.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
