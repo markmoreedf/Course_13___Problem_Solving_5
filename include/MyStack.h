@@ -5,11 +5,13 @@ class MyStack : public MyQueue<T>
 {
 public:
 
-    T Top() const { return this->_list.tail->value; }
+    void Push(T value) { this->_list.InsertAtBeginning(value); }
 
-    T Bottom() const { return this->_list.head->value; }
+    T Top() const { return this->Front(); }
 
-    void Pop() { this->_list.DeleteLastNode(); }
+    T Bottom() const { return this->Back(); }
+
+    
 
 };
 

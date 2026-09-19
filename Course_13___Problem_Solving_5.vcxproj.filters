@@ -30,7 +30,7 @@
       <Filter>Header Files\DataStructure</Filter>
     </ClInclude>
     <ClInclude Include="include\MyStack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DataStructure</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
