@@ -1,6 +1,6 @@
 #pragma once
 
-#include<iostream>
+#include<string>
 #include "MyStackArr.h"
 
 using namespace std;

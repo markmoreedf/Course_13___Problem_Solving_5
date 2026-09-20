@@ -364,6 +364,7 @@ static void TestMyString()
 int main()
 {
     TestMyString();
+    cout << "Hello\n";
     return 0;
 }
 
