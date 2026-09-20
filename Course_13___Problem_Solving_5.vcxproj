@@ -127,9 +127,13 @@
     <ClCompile Include="Course_13___Problem_Solving_5.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="clsMyString.h" />
+    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="include\DblLinkedList.h" />
     <ClInclude Include="include\MyQueue.h" />
     <ClInclude Include="include\MyStack.h" />
+    <ClInclude Include="MyQueueArr.h" />
+    <ClInclude Include="MyStackArr.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
