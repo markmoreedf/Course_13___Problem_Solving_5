@@ -6,6 +6,7 @@
 #include "MyQueueArr.h"
 #include "MyStackArr.h"
 #include "clsMyString.h"
+#include "QueueLine.h"
 using namespace std;
 
 static void TestDblLinkedList()
@@ -360,11 +361,23 @@ static void TestMyString()
     cout << "Current Value: " << myString.GetValue() << endl;
 }
 
+static void TestQueueLine()
+{
+   
+}
 
 int main()
 {
-    TestMyString();
-    cout << "Hello\n";
+    QueueLine PayBillsQueue("B0", 5);
+    QueueLine SubscribtionQueue("S0", 15);
+    PayBillsQueue.IssueTicket();
+    PayBillsQueue.IssueTicket();
+    PayBillsQueue.IssueTicket();
+    PayBillsQueue.PrintQLine();
+    SubscribtionQueue.IssueTicket();
+    SubscribtionQueue.IssueTicket();
+    SubscribtionQueue.IssueTicket();
+    SubscribtionQueue.PrintQLine();
     return 0;
 }
 

@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClInclude Include="clsMyString.h" />
     <ClInclude Include="DynamicArray.h" />
+    <ClInclude Include="include\clsDate.h" />
+    <ClInclude Include="include\clsString.h" />
     <ClInclude Include="include\DblLinkedList.h" />
     <ClInclude Include="include\MyQueue.h" />
     <ClInclude Include="include\MyStack.h" />

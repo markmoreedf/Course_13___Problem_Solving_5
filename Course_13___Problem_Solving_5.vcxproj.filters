@@ -44,8 +44,14 @@
     <ClInclude Include="clsMyString.h">
       <Filter>Header Files\DataStructure</Filter>
     </ClInclude>
+    <ClInclude Include="include\clsDate.h">
+      <Filter>Header Files\DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="include\clsString.h">
+      <Filter>Header Files\DataStructure</Filter>
+    </ClInclude>
     <ClInclude Include="QueueLine.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DataStructure</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
