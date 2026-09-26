@@ -6,7 +6,7 @@
 #include "MyQueueArr.h"
 #include "MyStackArr.h"
 #include "clsMyString.h"
-#include "QueueLine.h"
+#include "clsQueueLine.h"
 using namespace std;
 
 static void TestDblLinkedList()
@@ -363,21 +363,128 @@ static void TestMyString()
 
 static void TestQueueLine()
 {
-   
+    cout << "\n==================================================\n";
+    cout << " Testing clsQueueLine with Edge Cases\n";
+    cout << "==================================================\n\n";
+
+    // 1. Initialize Queue with prefix "A" and 5 minutes average serve time
+    clsQueueLine queueLine("A", 5);
+
+    // ----------------------------------------------------
+    // [Edge Case 1]: Operations on Completely Empty Queue
+    // ----------------------------------------------------
+    cout << " [Test 1]: Operations on completely EMPTY Queue...\n";
+
+    cout << "-> Queue Info (Empty):\n";
+    queueLine.PrintQueueInfo();
+
+    cout << "-> LTR Print (Empty): ";
+    queueLine.PrintQLineLTR();
+    cout << "\n";
+
+    cout << "-> RTL Print (Empty): ";
+    queueLine.PrintQLineRTL();
+    cout << "\n";
+
+    cout << "-> All Tickets Print (Empty):\n";
+    queueLine.PrintAllTickets();
+
+    cout << "-> WhoIsNext(): " << queueLine.WhoIsNext() << " | (Expected: No Clients Left.)\n";
+    cout << "-> ServeNextClient(): " << (queueLine.ServeNextClient() ? "Success" : "Failed (Correct Behavior)") << "\n";
+    cout << "-> WaitingClients(): " << queueLine.WaitingClients() << " | (Expected: 0)\n";
+    cout << "-> ServedClients(): " << queueLine.ServedClients() << " | (Expected: 0)\n\n";
+
+    // ----------------------------------------------------
+    // [Edge Case 2]: Single Client in Queue
+    // ----------------------------------------------------
+    cout << " [Test 2]: Adding a single client (A1)...\n";
+    queueLine.IssueTicket(); // Ticket A1 - Expected wait time: 0 minutes
+
+    cout << "-> WhoIsNext(): " << queueLine.WhoIsNext() << " | (Expected: A1)\n";
+
+    cout << "-> LTR Print (Single Item): ";
+    queueLine.PrintQLineLTR();
+    cout << "\n";
+
+    cout << "-> RTL Print (Single Item): ";
+    queueLine.PrintQLineRTL();
+    cout << "\n";
+
+    cout << "-> Single Ticket Details:\n";
+    queueLine.PrintAllTickets();
+
+    // ----------------------------------------------------
+    // [Case 3]: Multiple Clients & Expected Wait Time
+    // ----------------------------------------------------
+    cout << "\n [Test 3]: Adding more clients (A2, A3)...\n";
+    queueLine.IssueTicket(); // A2 (Expected wait time = 5 mins)
+    queueLine.IssueTicket(); // A3 (Expected wait time = 10 mins)
+
+    cout << "-> Full Queue LTR: ";
+    queueLine.PrintQLineLTR(); // Expected: A1 -> A2 -> A3
+    cout << "\n";
+
+    cout << "-> Full Queue RTL: ";
+    queueLine.PrintQLineRTL(); // Expected: A3 <- A2 <- A1
+    cout << "\n";
+
+    cout << "-> Queue Summary Info:\n";
+    queueLine.PrintQueueInfo();
+
+    cout << "-> All Tickets Details:\n";
+    queueLine.PrintAllTickets();
+
+    // ----------------------------------------------------
+    // [Case 4]: Interleaved Serving and Adding
+    // ----------------------------------------------------
+    cout << "\n [Test 4]: Serving first client (A1) then adding new one...\n";
+    queueLine.ServeNextClient(); // Serves A1
+
+    cout << "-> WhoIsNext() after serving A1: " << queueLine.WhoIsNext() << " | (Expected: A2)\n";
+    cout << "-> Current LTR: ";
+    queueLine.PrintQLineLTR(); // Expected: A2 -> A3
+    cout << "\n";
+
+    cout << "\n-> Issuing new ticket after serving A1...\n";
+    queueLine.IssueTicket(); // Must be A4 (not reusing old numbers)
+
+    cout << "-> LTR after addition: ";
+    queueLine.PrintQLineLTR(); // Expected: A2 -> A3 -> A4
+    cout << "\n";
+
+    // ----------------------------------------------------
+    // [Edge Case 5]: Fully Emptying Queue then Re-adding
+    // ----------------------------------------------------
+    cout << "\n [Test 5]: Completely emptying the queue...\n";
+    while (queueLine.WaitingClients() > 0)
+    {
+        cout << "   [Serving]: " << queueLine.WhoIsNext() << endl;
+        queueLine.ServeNextClient();
+    }
+
+    cout << "-> ServeNextClient() on empty queue: "
+        << (queueLine.ServeNextClient() ? "Success" : "Failed (Correct Behavior)") << endl;
+
+    cout << "-> Queue Info after full drain:\n";
+    queueLine.PrintQueueInfo();
+
+    cout << "\n-> Adding new client (A5) to verify counter persistence...\n";
+    queueLine.IssueTicket(); // Ticket number must be A5
+    cout << "-> WhoIsNext(): " << queueLine.WhoIsNext() << " | (Expected: A5)\n";
+    cout << "-> Final LTR: ";
+    queueLine.PrintQLineLTR();
+    cout << "\n";
+
+    cout << "\n==================================================\n";
+    cout << " All tests executed cleanly with zero crashes!\n";
+    cout << "==================================================\n";
 }
 
 int main()
 {
-    QueueLine PayBillsQueue("B0", 5);
-    QueueLine SubscribtionQueue("S0", 15);
-    PayBillsQueue.IssueTicket();
-    PayBillsQueue.IssueTicket();
-    PayBillsQueue.IssueTicket();
-    PayBillsQueue.PrintQLine();
-    SubscribtionQueue.IssueTicket();
-    SubscribtionQueue.IssueTicket();
-    SubscribtionQueue.IssueTicket();
-    SubscribtionQueue.PrintQLine();
+    TestQueueLine();
+
+
     return 0;
 }
 

@@ -50,7 +50,7 @@
     <ClInclude Include="include\clsString.h">
       <Filter>Header Files\DataStructure</Filter>
     </ClInclude>
-    <ClInclude Include="QueueLine.h">
+    <ClInclude Include="clsQueueLine.h">
       <Filter>Header Files\DataStructure</Filter>
     </ClInclude>
   </ItemGroup>
